@@ -8,8 +8,8 @@ class HarryPotter
     const PRICE_BOOK = 8;
     const MIN_NUM=0;
     const DISCOUNT_RATE = [
-            0=>0,
-            1 => 0,
+            0 => 0.0,
+            1 => 0.0,
             2 => 0.05,
             3 => 0.1,
             4 => 0.2,
@@ -24,7 +24,7 @@ class HarryPotter
      
         for (; $num_book_types> 1; $num_book_types = $this->count_Book_Types()) {
             $total_Books[]= $num_book_types;
-            $this->discount_Price += $num_book_types * self::PRICE_BOOK * self::DISCOUNT_RATE[$num_book_types];
+            $this->discount_Price($num_book_types);
             $this->update_Book_Types($num_book_types);
             if (count($this->book_arr) == 5) {
                 $this->Is_Special_Price($total_Books);
@@ -32,6 +32,11 @@ class HarryPotter
         }
         $this->total_Price =(double)$price - $this->discount_Price;
         return $this->total_Price;
+    }
+    private function discount_Price($num_book_types)
+    {
+        $this->discount_Price += $num_book_types * self::PRICE_BOOK * self::DISCOUNT_RATE[$num_book_types];
+        return $this->discount_Price;
     }
     private function Is_Special_Price($total_Books)
     {
