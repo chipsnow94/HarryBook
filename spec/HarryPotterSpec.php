@@ -52,6 +52,18 @@ class HarryPotterSpec extends ObjectBehavior
     {
         $this->price_Calculate([1,1,2,2,3,3,4,5])->shouldReturn(51.2);
     }
+    public function it_8_book_1234512345()
+    {
+        $this->price_Calculate([1,2,3,4,5,1,2,3,4,5])->shouldReturn(60.0);
+    }
+    public function it_8_book_12345123451()
+    {
+        $this->price_Calculate([1,2,3,4,5,1,2,3,4,5,1])->shouldReturn(68.0);
+    }
+    public function it_8_book_123451234512()
+    {
+        $this->price_Calculate([1,2,3,4,5,1,2,3,4,5,1,2])->shouldReturn(75.2);
+    }
     // public function it_invalid_number_input_exception()
     // {
     //     $this->shouldThrow(new \InvalidArgumentException('Book must be larger than 0'))->duringPrice_Calculate(['a',1]);
