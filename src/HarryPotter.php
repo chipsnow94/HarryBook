@@ -24,7 +24,7 @@ class HarryPotter
      
         for (; $num_book_types> 1; $num_book_types = $this->count_Book_Types()) {
             $total_Books[]= $num_book_types;
-            $this->discount_Price($num_book_types);
+            $this->calcu_Discount_Price($num_book_types);
             $this->update_Book_Types($num_book_types);
             if (count($this->book_arr) == 5) {
                 $this->Is_Special_Price($total_Books);
@@ -33,7 +33,7 @@ class HarryPotter
         $this->total_Price =(double)$price - $this->discount_Price;
         return $this->total_Price;
     }
-    private function discount_Price($num_book_types)
+    private function calcu_Discount_Price($num_book_types)
     {
         $this->discount_Price += $num_book_types * self::PRICE_BOOK * self::DISCOUNT_RATE[$num_book_types];
         return $this->discount_Price;
