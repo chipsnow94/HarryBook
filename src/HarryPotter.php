@@ -2,7 +2,8 @@
 
 class HarryPotter
 {
-    private $book_array;
+    private $book_arr;
+    private $total_Price =0;
     private $discount_Price = 0;
     const PRICE_BOOK = 8;
     const MIN_NUM=0;
@@ -16,34 +17,35 @@ class HarryPotter
     ];
     public function price_Calculate($book)
     {
-        $total_Discount_Book = [];
-        $this->book_array = array_count_values($book);
+        $total_Books = [];
+        $this->book_arr = array_count_values($book);
         $price = $this->default_Price();
         $num_book_types = $this->count_Book_Types();
      
         for (; $num_book_types> 1; $num_book_types = $this->count_Book_Types()) {
-            $total_Discount_Book[]= $num_book_types;
+            $total_Books[]= $num_book_types;
             $this->discount_Price += $num_book_types * self::PRICE_BOOK * self::DISCOUNT_RATE[$num_book_types];
             $this->update_Book_Types($num_book_types);
-            if (count($this->book_array) == 5) {
-                $this->Is_Special_Price($total_Discount_Book);
+            if (count($this->book_arr) == 5) {
+                $this->Is_Special_Price($total_Books);
             }
         }
-        return (double)$price - $this->discount_Price;
+        $this->total_Price =(double)$price - $this->discount_Price;
+        return $this->total_Price;
     }
-    private function Is_Special_Price($total_Discount_Book)
+    private function Is_Special_Price($total_Books)
     {
-        $three_discount_times = $this->count_Discount_Times($total_Discount_Book, 3);
-        $five_discount_times = $this->count_Discount_Times($total_Discount_Book, 5);
+        $three_discount_times = $this->count_Discount_Times($total_Books, 3);
+        $five_discount_times = $this->count_Discount_Times($total_Books, 5);
         $diffent_price = min($three_discount_times, $five_discount_times)*0.4;
         $this->discount_Price += $diffent_price;
         return $this->discount_Price;
     }
     private function update_Book_Types($num_book_types)
     {
-        for ($i = 1; $i <= count($this->book_array);  $i++) {
-            if ($this->book_array[$i] >= 1) {
-                $this->book_array[$i]--;
+        for ($i = 1; $i <= count($this->book_arr);  $i++) {
+            if ($this->book_arr[$i] >= 1) {
+                $this->book_arr[$i]--;
                 $num_book_types-=1;
             }
         }
@@ -51,8 +53,8 @@ class HarryPotter
     private function count_Book_Types()
     {
         $num_book_types = 0;
-        for ($i = 1; $i <= count($this->book_array); $i++) {
-            if ($this->book_array[$i] > 0) {
+        for ($i = 1; $i <= count($this->book_arr); $i++) {
+            if ($this->book_arr[$i] > 0) {
                 $num_book_types+=1;
             }
         }
@@ -61,16 +63,16 @@ class HarryPotter
     private function default_Price()
     {
         $price = 0;
-        for ($i=1;$i<=count($this->book_array);$i++) {
-            $price += $this->book_array[$i]*self::PRICE_BOOK;
+        for ($i=1;$i<=count($this->book_arr);$i++) {
+            $price += $this->book_arr[$i]*self::PRICE_BOOK;
         }
         return $price;
     }
-    private function count_Discount_Times($total_Discount_Book, $searching_Item)
+    private function count_Discount_Times($total_Books, $searching_Item)
     {
         $appear_Times = 0;
-        for ($i = 0; $i < count($total_Discount_Book); $i++) {
-            if ($total_Discount_Book[$i] == $searching_Item) {
+        for ($i = 0; $i < count($total_Books); $i++) {
+            if ($total_Books[$i] == $searching_Item) {
                 $appear_Times++;
             }
         }
